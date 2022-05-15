@@ -10,35 +10,32 @@
 
 int n;
 
-int* used;
-int** graph;
+bool* used;
+bool** graph;
 
-bool dfs(int top) {
-    used[top] = 1;
+void dfs(int top) {
+    used[top] = true;
 
     for (int i = 0; i < n; i++)
-        if (i != top && graph[i][top] == 1 && used[i] == 0) {
+        if (graph[top][i] && !used[i]) {
             std::cout << i + 1 << " ";
             dfs(i);
+            std::cout << std::endl;
         }
-
-    std::cout << std::endl;
-
-    return true;
 }
 
 int main() {
     std::cout << "Enter count of tops: ";
     std::cin >> n;
 
-    graph = new int*[n];
-    used = new int[n]{};
+    graph = new bool*[n];
+    used = new bool[n]{};
 
     std::cout << "Enter matrix:\n";
 
     for (int i = 0; i < n; i++) {
-        graph[i] = new int[n];
-        used[i] = 0;
+        graph[i] = new bool[n];
+        used[i] = false;
 
         for (int j = 0; j < n; j++)
             std::cin >> graph[i][j];
@@ -46,7 +43,7 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++)
-            used[j] = 0;
+            used[j] = false;
 
         std::cout << i + 1 << ":\n";
 
